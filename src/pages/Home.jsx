@@ -164,7 +164,7 @@ function Home() {
                             wordBreak: "break-word",
                         }}
                     >
-                        🏆 Bolão Copa 2026
+                        Bolão Copa 2026
                     </h1>
 
                     <p
