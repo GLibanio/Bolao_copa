@@ -211,7 +211,7 @@ const jogosRodada1 = [
       rodada: 1,
       grupo: "K",
       data: "2026-06-17",
-      horario: "21:00",
+      horario: "23:00",
       mandante: "Uzbequistão",
       visitante: "Colômbia"
     }
@@ -294,8 +294,8 @@ const jogosRodada2 = [
       id: 33,
       rodada: 2,
       grupo: "F",
-      data: "2026-06-20",
-      horario: "23:00",
+      data: "2026-06-21",
+      horario: "01:00",
       mandante: "Tunísia",
       visitante: "Japão"
     },
