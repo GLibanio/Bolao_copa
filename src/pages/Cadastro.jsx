@@ -22,7 +22,18 @@ function Cadastro({ mudarTela }) {
 
       mudarTela("login");
     } catch (erro) {
-      alert(erro.message);
+      if (erro.code === "auth/email-already-in-use") {
+        alert("Email já cadastrado");
+      }
+
+      else if (erro.code === "auth/weak-password") {
+        alert("Senha fraca. A senha deve ter pelo menos 6 caracteres.");
+      }
+
+      else {
+        alert("Erro ao criar conta");
+        console.error(erro);
+      }
     }
   }
 
