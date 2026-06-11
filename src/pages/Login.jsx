@@ -13,7 +13,27 @@ function Login({ mudarTela }) {
     try {
       await login(email, senha);
     } catch (erro) {
-      alert(erro.message);
+
+      if (erro.code === "auth/user-not-found") {
+        alert("Email não cadastrado");
+      }
+    
+      else if (erro.code === "auth/invalid-credential") {
+        alert("Email ou senha inválidos");
+      }
+    
+      else if (erro.code === "auth/wrong-password") {
+        alert("Senha inválida");
+      }
+    
+      else if (erro.code === "auth/invalid-email") {
+        alert("Email inválido");
+      }
+    
+      else {
+        alert("Erro ao realizar login");
+        console.error(erro);
+      }
     }
   }
 
