@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 import jogos from "../data/jogos";
 import ModalAposta from "../components/ModalAposta";
-
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 import {
     salvarAposta,
@@ -62,6 +63,26 @@ function Home() {
         }));
     }
 
+    const [pontosUsuario, setPontosUsuario] = useState(0);
+
+    useEffect(() => {
+        carregarPontos();
+    }, []);
+
+    async function carregarPontos() {
+        if (!usuario?.id) return;
+
+        const snap = await getDoc(
+            doc(db, "usuarios", usuario.id)
+        );
+
+        if (snap.exists()) {
+            setPontosUsuario(
+                snap.data().pontos || 0
+            );
+        }
+    }
+
     useEffect(() => {
         if (usuario) carregarDados();
     }, [usuario]);
@@ -117,6 +138,8 @@ function Home() {
 
         return new Date() >= dataHoraJogo;
     }
+
+    console.log(usuario);
 
     return (
         <div
@@ -229,7 +252,7 @@ function Home() {
                                 marginTop: "2px",
                             }}
                         >
-                            {usuario?.pontos || 0}
+                            {pontosUsuario}
                         </div>
                     </div>
                 </div>

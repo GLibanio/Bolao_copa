@@ -82,6 +82,14 @@ function MataMata() {
         }
     }
 
+    function jogoEmAndamento(jogo) {
+        const dataHoraJogo = new Date(
+            `${jogo.data}T${jogo.horario}:00`
+        );
+
+        return new Date() >= dataHoraJogo;
+    }
+
     return (
         <div>
             {/* Cabeçalho */}
@@ -166,113 +174,126 @@ function MataMata() {
                     gap: "20px",
                 }}
             >
-                {jogosFase.map((jogo, index) => (
-                    <div
-                        key={jogo.id}
-                        style={{
-                            background: "#fff",
-                            borderRadius: "18px",
-                            padding: "20px",
-                            boxShadow:
-                                "0 4px 15px rgba(0,0,0,.08)",
-                            border:
-                                "1px solid #e5e7eb",
-                        }}
-                    >
-                        <div
-                            style={{
-                                textAlign: "center",
-                                marginBottom: "15px",
-                            }}
-                        >
-                            <h3
-                                style={{
-                                    margin: 0,
-                                    color: "#0057b8",
-                                }}
-                            >
-                                {fase.tituloJogo} {index + 1}
-                            </h3>
-                        </div>
+                {jogosFase.map((jogo, index) => {
+                    const partidaIniciada =
+                        jogo.data &&
+                        jogo.horario &&
+                        jogoEmAndamento(jogo);
 
+                    return (
                         <div
+                            key={jogo.id}
                             style={{
-                                textAlign: "center",
-                                color: "#64748b",
-                                fontSize: "14px",
-                                marginBottom: "15px",
-                            }}
-                        >
-                            <div>{jogo.data}</div>
-                            <div>{jogo.horario}</div>
-                            <div>{jogo.local}</div>
-                        </div>
-
-                        <div
-                            style={{
-                                background: "#f8fafc",
-                                borderRadius: "12px",
-                                padding: "15px",
-                                textAlign: "center",
+                                background: "#fff",
+                                borderRadius: "18px",
+                                padding: "20px",
+                                boxShadow:
+                                    "0 4px 15px rgba(0,0,0,.08)",
+                                border: "1px solid #e5e7eb",
                             }}
                         >
                             <div
                                 style={{
-                                    fontWeight: "bold",
-                                    fontSize: "16px",
+                                    textAlign: "center",
+                                    marginBottom: "15px",
                                 }}
                             >
-                                {jogo.mandante}
+                                <h3
+                                    style={{
+                                        margin: 0,
+                                        color: "#0057b8",
+                                    }}
+                                >
+                                    {fase.tituloJogo} {index + 1}
+                                </h3>
                             </div>
 
                             <div
                                 style={{
-                                    margin: "15px 0",
-                                    fontWeight: "bold",
-                                    color: "#0057b8",
-                                    fontSize: "22px",
+                                    textAlign: "center",
+                                    color: "#64748b",
+                                    fontSize: "14px",
+                                    marginBottom: "15px",
                                 }}
                             >
-                                VS
+                                <div>{jogo.data}</div>
+                                <div>{jogo.horario}</div>
+                                <div>{jogo.local}</div>
                             </div>
 
                             <div
                                 style={{
-                                    fontWeight: "bold",
-                                    fontSize: "16px",
-                                }}
-                            >
-                                {jogo.visitante}
-                            </div>
-                        </div>
-                        <div
-                            style={{
-                                marginTop: "15px",
-                            }}
-                        >
-                            <button
-                                hidden
-                                onClick={() => abrirAposta(jogo)}
-                                style={{
-                                    width: "100%",
-                                    padding: "14px",
-                                    border: "none",
+                                    background: "#f8fafc",
                                     borderRadius: "12px",
-                                    background:
-                                        "linear-gradient(90deg,#006847,#0057b8)",
-                                    color: "#fff",
-                                    fontWeight: "bold",
-                                    cursor: "pointer",
-                                    fontSize: "15px",
-                                    boxShadow:
-                                        "0 4px 12px rgba(0,0,0,.15)",
+                                    padding: "15px",
+                                    textAlign: "center",
                                 }}
                             >
-                                Fazer Palpite
-                            </button>
+                                <div
+                                    style={{
+                                        fontWeight: "bold",
+                                        fontSize: "16px",
+                                    }}
+                                >
+                                    {jogo.mandante}
+                                </div>
+
+                                <div
+                                    style={{
+                                        margin: "15px 0",
+                                        fontWeight: "bold",
+                                        color: "#0057b8",
+                                        fontSize: "22px",
+                                    }}
+                                >
+                                    VS
+                                </div>
+
+                                <div
+                                    style={{
+                                        fontWeight: "bold",
+                                        fontSize: "16px",
+                                    }}
+                                >
+                                    {jogo.visitante}
+                                </div>
+                            </div>
+
+                            <div
+                                style={{
+                                    marginTop: "15px",
+                                }}
+                            >
+                                <button
+                                    hidden
+                                    disabled={partidaIniciada}
+                                    onClick={() => abrirAposta(jogo)}
+                                    style={{
+                                        width: "100%",
+                                        padding: "14px",
+                                        border: "none",
+                                        borderRadius: "12px",
+                                        background: partidaIniciada
+                                            ? "#94a3b8"
+                                            : "linear-gradient(90deg,#006847,#0057b8)",
+                                        color: "#fff",
+                                        fontWeight: "bold",
+                                        cursor: partidaIniciada
+                                            ? "not-allowed"
+                                            : "pointer",
+                                        fontSize: "15px",
+                                        boxShadow:
+                                            "0 4px 12px rgba(0,0,0,.15)",
+                                    }}
+                                >
+                                    {partidaIniciada
+                                        ? "Partida em andamento"
+                                        : "Fazer Palpite"}
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
             {mostrarModal && jogoSelecionado && (
                 <ModalAposta
