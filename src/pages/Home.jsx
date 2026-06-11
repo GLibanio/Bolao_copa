@@ -30,8 +30,6 @@ function Home() {
 
     const grupos = gerarClassificacao(jogos, resultados);
 
-    const [indiceJogo, setIndiceJogo] = useState({});
-
     const headerStyle = {
         padding: "14px",
         textAlign: "center",
@@ -42,6 +40,7 @@ function Home() {
         padding: "12px",
         textAlign: "center",
     };
+
 
     function proximaRodada(grupo) {
         setRodadasGrupo((prev) => ({
@@ -109,6 +108,14 @@ function Home() {
         await carregarDados();
 
         alert("Palpite salvo!");
+    }
+
+    function jogoEmAndamento(jogo) {
+        const dataHoraJogo = new Date(
+            `${jogo.data}T${jogo.horario}:00`
+        );
+
+        return new Date() >= dataHoraJogo;
     }
 
     return (
@@ -547,6 +554,8 @@ function Home() {
                                     const aposta = apostas[jogo.id];
                                     const finalizado =
                                         resultados[jogo.id]?.finalizado;
+                                    const partidaIniciada = jogoEmAndamento(jogo);
+
 
                                     return (
                                         <div
@@ -699,31 +708,35 @@ function Home() {
                                             )}
 
                                             <button
-                                                disabled={finalizado}
-                                                onClick={() =>
-                                                    abrirAposta(jogo)
-                                                }
+                                                disabled={finalizado || partidaIniciada}
+                                                onClick={() => abrirAposta(jogo)}
                                                 style={{
                                                     width: "100%",
                                                     boxSizing: "border-box",
                                                     padding: "14px",
                                                     border: "none",
                                                     borderRadius: "10px",
-                                                    background: finalizado
-                                                        ? "#94a3b8"
-                                                        : "#0057b8",
+                                                    background:
+                                                        finalizado
+                                                            ? "#94a3b8"
+                                                            : partidaIniciada
+                                                                ? "#f59e0b"
+                                                                : "#0057b8",
                                                     color: "#fff",
                                                     fontWeight: "bold",
-                                                    cursor: finalizado
-                                                        ? "not-allowed"
-                                                        : "pointer",
+                                                    cursor:
+                                                        finalizado || partidaIniciada
+                                                            ? "not-allowed"
+                                                            : "pointer",
                                                 }}
                                             >
                                                 {finalizado
                                                     ? "Encerrado"
-                                                    : aposta
-                                                        ? "Editar Palpite"
-                                                        : "Apostar"}
+                                                    : partidaIniciada
+                                                        ? "Partida em andamento"
+                                                        : aposta
+                                                            ? "Editar Palpite"
+                                                            : "Apostar"}
                                             </button>
                                         </div>
                                     );

@@ -42,6 +42,28 @@ function Navbar({ telaAtual, mudarTela }) {
         </button>
 
         <button
+          onClick={() => mudarTela("mata-mata")}
+          style={{
+            border: "none",
+            cursor: "pointer",
+            padding: "12px 24px",
+            borderRadius: "12px",
+            fontWeight: "600",
+            transition: ".3s",
+            background:
+              telaAtual === "mata-mata"
+                ? "linear-gradient(90deg,#bf0a30,#0057b8)"
+                : "transparent",
+            color:
+              telaAtual === "mata-mata"
+                ? "#fff"
+                : "#333",
+          }}
+        >
+          ⚔️ Mata-Mata
+        </button>
+
+        <button
           onClick={() => mudarTela("bolao")}
           style={{
             border: "none",

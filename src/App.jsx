@@ -3,10 +3,11 @@ import { useAuth } from "./hooks/useAuth";
 
 import Home from "./pages/Home";
 import Bolao from "./pages/Bolao";
-import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import Admin from "./pages/Admin";
 import Navbar from "./components/Navbar";
+import MataMata from "./pages/MataMata";
+
 
 function App() {
   const { usuario } = useAuth();
@@ -58,6 +59,8 @@ function App() {
         {telaAtual === "home" && <Home />}
 
         {telaAtual === "bolao" && <Bolao />}
+
+        {telaAtual === "mata-mata" && <MataMata />}
       </div>
     </div>
   );
