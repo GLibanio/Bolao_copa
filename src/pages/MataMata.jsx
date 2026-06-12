@@ -1,13 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import jogos from "../data/jogos";
 import ModalAposta from "../components/ModalAposta";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+import { bandeiras } from "../data/bandeiras";
+
 
 function MataMata() {
+    const [resultados, setResultados] = useState({});
+
     const [mostrarModal, setMostrarModal] =
         useState(false);
 
     const [jogoSelecionado, setJogoSelecionado] =
         useState(null);
+
+    useEffect(() => {
+        carregarResultados();
+    }, []);
+
+    async function carregarResultados() {
+        const snap = await getDocs(
+            collection(db, "resultados")
+        );
+
+        const data = {};
+
+        snap.forEach((doc) => {
+            data[doc.id] = doc.data();
+        });
+
+        setResultados(data);
+    }
 
     function abrirAposta(jogo) {
         setJogoSelecionado(jogo);
@@ -27,6 +51,10 @@ function MataMata() {
         );
 
         setMostrarModal(false);
+    }
+
+    function getBandeira(nome) {
+        return bandeiras[nome];
     }
 
     const fases = [
@@ -216,9 +244,52 @@ function MataMata() {
                                     marginBottom: "15px",
                                 }}
                             >
-                                <div>{jogo.data}</div>
-                                <div>{jogo.horario}</div>
-                                <div>{jogo.local}</div>
+                                {resultados?.[jogo.id]?.finalizado ? (
+                                    <>
+                                        <div
+                                            style={{
+                                                fontSize: "26px",
+                                                fontWeight: "bold",
+                                                color: "#0057b8",
+                                            }}
+                                        >
+                                            {resultados[jogo.id].golsMandante}
+                                            {" x "}
+                                            {resultados[jogo.id].golsVisitante}
+                                        </div>
+
+                                        <div
+                                            style={{
+                                                color: "#16a34a",
+                                                fontWeight: "bold",
+                                                marginTop: "4px",
+                                            }}
+                                        >
+                                            Encerrado
+                                        </div>
+
+                                        <div
+                                            style={{
+                                                marginTop: "6px",
+                                            }}
+                                        >
+                                            {jogo.local}
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div>
+                                            {jogo.data
+                                                ?.split("-")
+                                                .reverse()
+                                                .join("/")}
+                                        </div>
+
+                                        <div>{jogo.horario}</div>
+
+                                        <div>{jogo.local}</div>
+                                    </>
+                                )}
                             </div>
 
                             <div
@@ -226,36 +297,94 @@ function MataMata() {
                                     background: "#f8fafc",
                                     borderRadius: "12px",
                                     padding: "15px",
-                                    textAlign: "center",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    gap: "10px",
                                 }}
                             >
+                                {/* Mandante */}
                                 <div
                                     style={{
-                                        fontWeight: "bold",
-                                        fontSize: "16px",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        width: "40%",
+                                        textAlign: "center",
                                     }}
                                 >
-                                    {jogo.mandante}
+                                    {getBandeira(jogo.mandante) && (
+                                        <img
+                                            src={getBandeira(jogo.mandante)}
+                                            alt={jogo.mandante}
+                                            style={{
+                                                width: "60px",
+                                                height: "40px",
+                                                objectFit: "contain",
+                                                marginBottom: "6px",
+                                            }}
+                                        />
+                                    )}
+
+                                    <strong
+                                        style={{
+                                            fontSize: "14px",
+                                            wordBreak: "break-word",
+                                        }}
+                                    >
+                                        {jogo.mandante}
+                                    </strong>
                                 </div>
 
+                                {/* Centro */}
                                 <div
                                     style={{
-                                        margin: "15px 0",
-                                        fontWeight: "bold",
-                                        color: "#0057b8",
-                                        fontSize: "22px",
+                                        textAlign: "center",
+                                        flexShrink: 0,
                                     }}
                                 >
-                                    VS
+                                    <div
+                                        style={{
+                                            fontWeight: "bold",
+                                            color: "#0057b8",
+                                            fontSize: "22px",
+                                        }}
+                                    >
+                                        VS
+                                    </div>
                                 </div>
 
+                                {/* Visitante */}
                                 <div
                                     style={{
-                                        fontWeight: "bold",
-                                        fontSize: "16px",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        width: "40%",
+                                        textAlign: "center",
                                     }}
                                 >
-                                    {jogo.visitante}
+                                    {getBandeira(jogo.visitante) && (
+                                        <img
+                                            src={getBandeira(jogo.visitante)}
+                                            alt={jogo.visitante}
+                                            style={{
+                                                width: "60px",
+                                                height: "40px",
+                                                objectFit: "contain",
+                                                marginBottom: "6px",
+                                            }}
+                                        />
+                                    )}
+
+                                    <strong
+                                        style={{
+                                            fontSize: "14px",
+                                            wordBreak: "break-word",
+                                        }}
+                                    >
+                                        {jogo.visitante}
+                                    </strong>
                                 </div>
                             </div>
 

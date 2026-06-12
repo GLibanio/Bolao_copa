@@ -13,7 +13,6 @@ import Login from "./pages/Login";
 function App() {
   const { usuario } = useAuth();
 
-  // 🔥 HOME ABRE POR PADRÃO
   const [telaAtual, setTelaAtual] = useState("home");
 
   // Não logado

@@ -642,25 +642,63 @@ function Home() {
                                                         padding: "0 5px",
                                                     }}
                                                 >
-                                                    <h2
-                                                        style={{
-                                                            margin: 0,
-                                                            color: "#0057b8",
-                                                            fontSize: "20px",
-                                                        }}
-                                                    >
-                                                        VS
-                                                    </h2>
+                                                    {finalizado ? (
+                                                        <>
+                                                            <div
+                                                                style={{
+                                                                    fontSize: "28px",
+                                                                    fontWeight: "bold",
+                                                                    color: "#0057b8",
+                                                                    lineHeight: 1,
+                                                                }}
+                                                            >
+                                                                {resultados[jogo.id]?.golsMandante}
+                                                                {" x "}
+                                                                {resultados[jogo.id]?.golsVisitante}
+                                                            </div>
 
-                                                    {jogo.data.split("-").reverse().join("/")}
-                                                    <small
-                                                        style={{
-                                                            display: "block",
-                                                            color: "#64748b",
-                                                        }}
-                                                    >
-                                                        {jogo.horario}
-                                                    </small>
+                                                            <small
+                                                                style={{
+                                                                    display: "block",
+                                                                    color: "#16a34a",
+                                                                    fontWeight: "bold",
+                                                                    marginTop: "4px",
+                                                                }}
+                                                            >
+                                                                Encerrado
+                                                            </small>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <h2
+                                                                style={{
+                                                                    margin: 0,
+                                                                    color: "#0057b8",
+                                                                    fontSize: "20px",
+                                                                }}
+                                                            >
+                                                                VS
+                                                            </h2>
+
+                                                            <small
+                                                                style={{
+                                                                    display: "block",
+                                                                    color: "#64748b",
+                                                                }}
+                                                            >
+                                                                {jogo.data.split("-").reverse().join("/")}
+                                                            </small>
+
+                                                            <small
+                                                                style={{
+                                                                    display: "block",
+                                                                    color: "#64748b",
+                                                                }}
+                                                            >
+                                                                {jogo.horario}
+                                                            </small>
+                                                        </>
+                                                    )}
                                                 </div>
 
                                                 <div
