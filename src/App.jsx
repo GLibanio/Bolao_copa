@@ -7,6 +7,7 @@ import Cadastro from "./pages/Cadastro";
 import Admin from "./pages/Admin";
 import Navbar from "./components/Navbar";
 import MataMata from "./pages/MataMata";
+import Login from "./pages/Login";
 
 
 function App() {
