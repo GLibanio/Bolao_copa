@@ -29,8 +29,15 @@ function Home() {
     const [jogoSelecionado, setJogoSelecionado] = useState(null);
     const [mostrarModal, setMostrarModal] = useState(false);
 
-    const grupos = gerarClassificacao(jogos, resultados);
+    const jogosGrupos = jogos.filter(
+        (j) => j.grupo &&
+            ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"].includes(j.grupo)
+    );
 
+    const grupos = gerarClassificacao(
+        jogosGrupos,
+        resultados
+    );
     const headerStyle = {
         padding: "14px",
         textAlign: "center",
