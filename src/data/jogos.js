@@ -698,7 +698,7 @@ const avos16 = [
     local: "El Gigante de Acero",
     data: "2026-06-29",
     horario: "22:00",
-    mandante: "1º F",
+    mandante: "Holanda",
     visitante: "Marrocos"
   },
   {
@@ -732,7 +732,7 @@ const avos16 = [
     data: "2026-07-01",
     horario: "21:00",
     mandante: "Estados Unidos",
-    visitante: "3º BEFIJ"
+    visitante: "Bósnia e Herzegovina"
   },
   {
     id: 80,
@@ -754,7 +754,7 @@ const avos16 = [
     data: "2026-06-29",
     horario: "14:00",
     mandante: "Brasil",
-    visitante: "2º F"
+    visitante: "Japão"
   },
   {
     id: 82,
@@ -764,7 +764,7 @@ const avos16 = [
     local: "Dallas",
     data: "2026-06-30",
     horario: "14:00",
-    mandante: "2º E",
+    mandante: "Costa do Marfim",
     visitante: "2º I"
   },
   {
