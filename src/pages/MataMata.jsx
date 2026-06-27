@@ -244,6 +244,10 @@ function MataMata() {
                         jogo.horario &&
                         jogoEmAndamento(jogo);
 
+                    const finalizado = resultados?.[jogo.id]?.finalizado;
+
+                    const bloqueado = partidaIniciada || finalizado;
+
                     const aposta = apostas[jogo.id];
 
                     return (
@@ -466,29 +470,35 @@ function MataMata() {
                                     </div>
                                 )}
                                 <button
-                                    disabled={partidaIniciada}
+                                    disabled={partidaIniciada || finalizado}
                                     onClick={() => abrirAposta(jogo)}
                                     style={{
                                         width: "100%",
                                         padding: "14px",
                                         border: "none",
                                         borderRadius: "12px",
-                                        background: partidaIniciada
-                                            ? "#94a3b8"
-                                            : "linear-gradient(90deg,#006847,#0057b8)",
+                                        background:
+                                            partidaIniciada || finalizado
+                                                ? "#94a3b8"
+                                                : "linear-gradient(90deg,#006847,#0057b8)",
                                         color: "#fff",
                                         fontWeight: "bold",
-                                        cursor: partidaIniciada
-                                            ? "not-allowed"
-                                            : "pointer",
+                                        cursor:
+                                            partidaIniciada || finalizado
+                                                ? "not-allowed"
+                                                : "pointer",
                                         fontSize: "15px",
-                                        boxShadow:
-                                            "0 4px 12px rgba(0,0,0,.15)",
+                                        boxShadow: "0 4px 12px rgba(0,0,0,.15)",
+                                        opacity: partidaIniciada || finalizado ? 0.75 : 1,
                                     }}
                                 >
-                                    {partidaIniciada
-                                        ? "Partida em andamento"
-                                        : "Fazer Palpite"}
+                                    {finalizado
+                                        ? "Encerrado"
+                                        : partidaIniciada
+                                            ? "Partida em andamento"
+                                            : aposta
+                                                ? "Editar Palpite"
+                                                : "Fazer Palpite"}
                                 </button>
                             </div>
                         </div>
@@ -498,11 +508,9 @@ function MataMata() {
             {mostrarModal && jogoSelecionado && (
                 <ModalAposta
                     jogo={jogoSelecionado}
-                    apostaAtual={null}
+                    apostaAtual={apostas[jogoSelecionado.id]}
                     onSalvar={salvarPalpite}
-                    onFechar={() =>
-                        setMostrarModal(false)
-                    }
+                    onFechar={() => setMostrarModal(false)}
                 />
             )}
         </div>
