@@ -666,7 +666,7 @@ const avos16 = [
     data: "2026-06-29",
     horario: "17:30",
     mandante: "Alemanha",
-    visitante: "3º ABCDF"
+    visitante: "Paraguai"
   },
   {
     id: 74,
@@ -676,8 +676,8 @@ const avos16 = [
     local: "Nova Jersey",
     data: "2026-06-30",
     horario: "18:00",
-    mandante: "1º I",
-    visitante: "3º CDFGH"
+    mandante: "França",
+    visitante: "Suécia"
   },
   {
     id: 75,
@@ -720,7 +720,7 @@ const avos16 = [
     local: "Los Angeles",
     data: "2026-07-02",
     horario: "16:00",
-    mandante: "1º H",
+    mandante: "Espanha",
     visitante: "2º J"
   },
   {
@@ -742,7 +742,7 @@ const avos16 = [
     local: "Seattle Field",
     data: "2026-07-01",
     horario: "17:00",
-    mandante: "1º G",
+    mandante: "Bélgica",
     visitante: "3º AEHIJ"
   },
   {
@@ -765,7 +765,7 @@ const avos16 = [
     data: "2026-06-30",
     horario: "14:00",
     mandante: "Costa do Marfim",
-    visitante: "2º I"
+    visitante: "Noruega"
   },
   {
     id: 83,
@@ -798,7 +798,7 @@ const avos16 = [
     data: "2026-07-03",
     horario: "19:00",
     mandante: "Argentina",
-    visitante: "2º H"
+    visitante: "Cabo Verde"
   },
   {
     id: 86,
@@ -808,8 +808,8 @@ const avos16 = [
     local: "Dallas",
     data: "2026-07-03",
     horario: "15:00",
-    mandante: "2º D",
-    visitante: "2º G"
+    mandante: "Austrália",
+    visitante: "Egito"
   },
   {
     id: 87,
