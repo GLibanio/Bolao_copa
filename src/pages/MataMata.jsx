@@ -394,7 +394,6 @@ function MataMata() {
                                 }}
                             >
                                 <button
-                                    hidden
                                     disabled={partidaIniciada}
                                     onClick={() => abrirAposta(jogo)}
                                     style={{
