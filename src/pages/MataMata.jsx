@@ -4,9 +4,17 @@ import ModalAposta from "../components/ModalAposta";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { bandeiras } from "../data/bandeiras";
+import { useAuth } from "../hooks/useAuth";
+import { salvarAposta } from "../services/apostaService";
+
 
 
 function MataMata() {
+
+    const { usuario } = useAuth();
+
+    const [apostas, setApostas] = useState({});
+
     const [resultados, setResultados] = useState({});
 
     const [mostrarModal, setMostrarModal] =
@@ -18,6 +26,29 @@ function MataMata() {
     useEffect(() => {
         carregarResultados();
     }, []);
+
+    useEffect(() => {
+        carregarResultados();
+        carregarApostas();
+    }, []);
+
+    async function carregarApostas() {
+        if (!usuario) return;
+
+        const snap = await getDocs(collection(db, "apostas"));
+
+        const data = {};
+
+        snap.forEach((doc) => {
+            const aposta = doc.data();
+
+            if (aposta.usuarioId === usuario.id) {
+                data[aposta.jogoId] = aposta;
+            }
+        });
+
+        setApostas(data);
+    }
 
     async function carregarResultados() {
         const snap = await getDocs(
@@ -38,19 +69,24 @@ function MataMata() {
         setMostrarModal(true);
     }
 
-    function salvarPalpite(gm, gv) {
-        console.log(
-            "Palpite:",
-            jogoSelecionado.id,
-            gm,
-            gv
-        );
+    async function salvarPalpite(gm, gv) {
+        try {
+            await salvarAposta(
+                usuario.id,
+                jogoSelecionado.id,
+                gm,
+                gv
+            );
 
-        alert(
-            `Palpite salvo: ${gm} x ${gv}`
-        );
+            await carregarApostas();
 
-        setMostrarModal(false);
+            setMostrarModal(false);
+
+            alert("Palpite salvo!");
+        } catch (e) {
+            console.error(e);
+            alert("Erro ao salvar palpite.");
+        }
     }
 
     function getBandeira(nome) {
@@ -207,6 +243,8 @@ function MataMata() {
                         jogo.data &&
                         jogo.horario &&
                         jogoEmAndamento(jogo);
+
+                    const aposta = apostas[jogo.id];
 
                     return (
                         <div
@@ -393,6 +431,40 @@ function MataMata() {
                                     marginTop: "15px",
                                 }}
                             >
+                                {aposta ? (
+                                    <div
+                                        style={{
+                                            background: "#eff6ff",
+                                            padding: "12px",
+                                            borderRadius: "10px",
+                                            marginTop: "15px",
+                                            marginBottom: "12px",
+                                            textAlign: "center",
+                                            fontWeight: "600",
+                                            color: "#1e3a8a",
+                                        }}
+                                    >
+                                        Seu palpite:
+                                        <strong>
+                                            {" "}
+                                            {aposta.golsMandante} x {aposta.golsVisitante}
+                                        </strong>
+                                    </div>
+                                ) : (
+                                    <div
+                                        style={{
+                                            background: "#f8fafc",
+                                            padding: "12px",
+                                            borderRadius: "10px",
+                                            marginTop: "15px",
+                                            marginBottom: "12px",
+                                            textAlign: "center",
+                                            color: "#64748b",
+                                        }}
+                                    >
+                                        Nenhum palpite
+                                    </div>
+                                )}
                                 <button
                                     disabled={partidaIniciada}
                                     onClick={() => abrirAposta(jogo)}
