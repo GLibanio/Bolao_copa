@@ -25,41 +25,28 @@ function Admin({ voltar }) {
     setResultados(data);
   }
 
-  async function salvar(jogo, gm, gv) {
+  async function salvar(jogo, gm, gv, classificado) {
     try {
-      console.log("Salvando:", jogo.id, gm, gv);
-
       await salvarResultado(
         jogo.id,
         gm,
-        gv
+        gv,
+        classificado
       );
 
-      console.log("Resultado salvo");
+      const pontos = await calcularPontosUsuarios();
 
-      const pontos =
-        await calcularPontosUsuarios();
-
-      console.log("Pontos:", pontos);
-
-      const users = await getDocs(
-        collection(db, "usuarios")
-      );
+      const users = await getDocs(collection(db, "usuarios"));
 
       for (const u of users.docs) {
-        await updateDoc(
-          doc(db, "usuarios", u.id),
-          {
-            pontos: pontos[u.id] || 0,
-          }
-        );
+        await updateDoc(doc(db, "usuarios", u.id), {
+          pontos: pontos[u.id] || 0,
+        });
       }
 
       await carregarResultados();
 
-      alert(
-        "Resultado salvo e pontos atualizados!"
-      );
+      alert("Resultado salvo e pontos atualizados!");
     } catch (erro) {
       console.error(erro);
       alert(erro.message);
@@ -219,30 +206,107 @@ function Admin({ voltar }) {
 function JogoAdmin({ jogo, resultado, onSalvar }) {
   const [gm, setGm] = useState(resultado?.golsMandante ?? "");
   const [gv, setGv] = useState(resultado?.golsVisitante ?? "");
+  const [classificado, setClassificado] = useState(
+    resultado?.classificado ?? ""
+  );
 
   useEffect(() => {
     setGm(resultado?.golsMandante ?? "");
     setGv(resultado?.golsVisitante ?? "");
+    setClassificado(resultado?.classificado ?? "");
   }, [resultado]);
 
   return (
-    <div style={{ border: "1px solid #ccc", padding: 10, marginBottom: 10 }}>
-      <strong>{jogo.mandante} x {jogo.visitante}</strong>
+    <div
+      style={{
+        border: "1px solid #ccc",
+        padding: 10,
+        marginBottom: 10,
+      }}
+    >
+      <strong>
+        {jogo.mandante} x {jogo.visitante}
+      </strong>
 
-      <br /><br />
+      <br />
+      <br />
 
-      <input value={gm} onChange={(e) => setGm(e.target.value)} />
+      <input
+        value={gm}
+        onChange={(e) => setGm(e.target.value)}
+      />
+
       <span> x </span>
-      <input value={gv} onChange={(e) => setGv(e.target.value)} />
 
-      <button onClick={() => onSalvar(jogo, Number(gm), Number(gv))}>
+      <input
+        value={gv}
+        onChange={(e) => setGv(e.target.value)}
+      />
+
+      {gm !== "" &&
+        gv !== "" &&
+        Number(gm) === Number(gv) &&
+        jogo.fase !== "Grupos" && (
+          <>
+            <br />
+            <br />
+
+            <select
+              value={classificado}
+              onChange={(e) =>
+                setClassificado(e.target.value)
+              }
+              style={{
+                padding: "8px",
+                borderRadius: "8px",
+                width: "250px",
+              }}
+            >
+              <option value="">
+                Selecione quem classificou
+              </option>
+
+              <option value={jogo.mandante}>
+                {jogo.mandante}
+              </option>
+
+              <option value={jogo.visitante}>
+                {jogo.visitante}
+              </option>
+            </select>
+          </>
+        )}
+
+      <br />
+      <br />
+
+      <button
+        onClick={() =>
+          onSalvar(
+            jogo,
+            Number(gm),
+            Number(gv),
+            classificado
+          )
+        }
+      >
         Salvar
       </button>
 
       {resultado && (
-        <p>
-          Final: {resultado.golsMandante} x {resultado.golsVisitante}
-        </p>
+        <>
+          <p>
+            Final: {resultado.golsMandante} x{" "}
+            {resultado.golsVisitante}
+          </p>
+
+          {resultado.classificado && (
+            <p>
+              ✅ Classificado:{" "}
+              <strong>{resultado.classificado}</strong>
+            </p>
+          )}
+        </>
       )}
     </div>
   );

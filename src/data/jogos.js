@@ -855,7 +855,7 @@ const oitavas = [
     local: "Houston",
     data: "2026-07-04",
     horario: "14:00",
-    mandante: "Vencedor Segunda Fase 3",
+    mandante: "Canadá",
     visitante: "Vencedor Segunda Fase 4"
   },
   {

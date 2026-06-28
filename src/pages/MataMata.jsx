@@ -69,13 +69,14 @@ function MataMata() {
         setMostrarModal(true);
     }
 
-    async function salvarPalpite(gm, gv) {
+    async function salvarPalpite(gm, gv, classificado) {
         try {
             await salvarAposta(
                 usuario.id,
                 jogoSelecionado.id,
                 gm,
-                gv
+                gv,
+                classificado
             );
 
             await carregarApostas();
@@ -288,35 +289,55 @@ function MataMata() {
                             >
                                 {resultados?.[jogo.id]?.finalizado ? (
                                     <>
-                                        <div
-                                            style={{
-                                                fontSize: "26px",
-                                                fontWeight: "bold",
-                                                color: "#0057b8",
-                                            }}
-                                        >
-                                            {resultados[jogo.id].golsMandante}
-                                            {" x "}
-                                            {resultados[jogo.id].golsVisitante}
-                                        </div>
+                                        {(() => {
+                                            const resultado = resultados[jogo.id];
+                                            const empate =
+                                                resultado.golsMandante === resultado.golsVisitante;
 
-                                        <div
-                                            style={{
-                                                color: "#16a34a",
-                                                fontWeight: "bold",
-                                                marginTop: "4px",
-                                            }}
-                                        >
-                                            Encerrado
-                                        </div>
+                                            const classMandante =
+                                                empate &&
+                                                resultado.classificado === jogo.mandante;
 
-                                        <div
-                                            style={{
-                                                marginTop: "6px",
-                                            }}
-                                        >
-                                            {jogo.local}
-                                        </div>
+                                            const classVisitante =
+                                                empate &&
+                                                resultado.classificado === jogo.visitante;
+
+                                            return (
+                                                <>
+                                                    <div
+                                                        style={{
+                                                            fontSize: "26px",
+                                                            fontWeight: "bold",
+                                                            color: "#0057b8",
+                                                        }}
+                                                    >
+                                                        {resultado.golsMandante}
+                                                        {classMandante && " (C)"}
+                                                        {" x "}
+                                                        {resultado.golsVisitante}
+                                                        {classVisitante && " (C)"}
+                                                    </div>
+
+                                                    <div
+                                                        style={{
+                                                            color: "#16a34a",
+                                                            fontWeight: "bold",
+                                                            marginTop: "4px",
+                                                        }}
+                                                    >
+                                                        Encerrado
+                                                    </div>
+
+                                                    <div
+                                                        style={{
+                                                            marginTop: "6px",
+                                                        }}
+                                                    >
+                                                        {jogo.local}
+                                                    </div>
+                                                </>
+                                            );
+                                        })()}
                                     </>
                                 ) : (
                                     <>
@@ -451,7 +472,17 @@ function MataMata() {
                                         Seu palpite:
                                         <strong>
                                             {" "}
-                                            {aposta.golsMandante} x {aposta.golsVisitante}
+
+                                            {aposta.golsMandante === aposta.golsVisitante &&
+                                                aposta.classificado === jogo.mandante &&
+                                                " (C)"}
+                                            {aposta.golsMandante}
+                                            {" x "}
+                                            {aposta.golsVisitante}
+                                            {aposta.golsMandante === aposta.golsVisitante &&
+                                                aposta.classificado === jogo.visitante &&
+                                                " (C)"}
+                                            
                                         </strong>
                                     </div>
                                 ) : (

@@ -14,6 +14,10 @@ function ModalAposta({
     apostaAtual?.golsVisitante ?? ""
   );
 
+  const [classificado, setClassificado] = useState(
+    apostaAtual?.classificado ?? ""
+  );
+
   return (
     <div
       style={{
@@ -186,6 +190,81 @@ function ModalAposta({
               width: "100%",
             }}
           >
+
+            {mandante !== "" &&
+              visitante !== "" &&
+              Number(mandante) === Number(visitante) && (
+                <div
+                  style={{
+                    marginBottom: "25px",
+                  }}
+                >
+                  <h4
+                    style={{
+                      marginBottom: "12px",
+                      textAlign: "center",
+                      color: "#333",
+                    }}
+                  >
+                    Em caso de empate, quem avança?
+                  </h4>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "12px",
+                    }}
+                  >
+                    <button
+                      onClick={() =>
+                        setClassificado(jogo.mandante)
+                      }
+                      style={{
+                        flex: 1,
+                        padding: "14px",
+                        borderRadius: "12px",
+                        border:
+                          classificado === jogo.mandante
+                            ? "2px solid #0057b8"
+                            : "2px solid #ddd",
+                        background:
+                          classificado === jogo.mandante
+                            ? "#eaf4ff"
+                            : "#fff",
+                        cursor: "pointer",
+                        fontWeight: "bold",
+                        transition: ".2s",
+                      }}
+                    >
+                      {jogo.mandante}
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        setClassificado(jogo.visitante)
+                      }
+                      style={{
+                        flex: 1,
+                        padding: "14px",
+                        borderRadius: "12px",
+                        border:
+                          classificado === jogo.visitante
+                            ? "2px solid #0057b8"
+                            : "2px solid #ddd",
+                        background:
+                          classificado === jogo.visitante
+                            ? "#eaf4ff"
+                            : "#fff",
+                        cursor: "pointer",
+                        fontWeight: "bold",
+                        transition: ".2s",
+                      }}
+                    >
+                      {jogo.visitante}
+                    </button>
+                  </div>
+                </div>
+              )}
             <button
               onClick={onFechar}
               style={{
@@ -202,12 +281,23 @@ function ModalAposta({
             </button>
 
             <button
-              onClick={() =>
+              onClick={() => {
+                if (
+                  Number(mandante) === Number(visitante) &&
+                  !classificado
+                ) {
+                  alert(
+                    "Escolha quem avança para a próxima fase."
+                  );
+                  return;
+                }
+
                 onSalvar(
                   Number(mandante),
-                  Number(visitante)
-                )
-              }
+                  Number(visitante),
+                  classificado
+                );
+              }}
               style={{
                 width: "100%",
                 padding: "14px",
