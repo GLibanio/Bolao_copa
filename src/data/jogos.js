@@ -844,8 +844,8 @@ const oitavas = [
     local: "Filadélfia",
     data: "2026-07-04",
     horario: "18:00",
-    mandante: "Vencedor Segunda Fase 1",
-    visitante: "Vencedor Segunda Fase 2"
+    mandante: "Paraguai",
+    visitante: "França"
   },
   {
     id: 90,
@@ -856,7 +856,7 @@ const oitavas = [
     data: "2026-07-04",
     horario: "14:00",
     mandante: "Canadá",
-    visitante: "Vencedor Segunda Fase 4"
+    visitante: "Marrocos"
   },
   {
     id: 91,
@@ -888,8 +888,8 @@ const oitavas = [
     local: "Nova Jersey",
     data: "2026-07-05",
     horario: "17:00",
-    mandante: "Vencedor Segunda Fase 9",
-    visitante: "Vencedor Segunda Fase 10"
+    mandante: "Brasil",
+    visitante: "Noruega"
   },
   {
     id: 94,
@@ -899,7 +899,7 @@ const oitavas = [
     local: "Azteca",
     data: "2026-07-05",
     horario: "21:00",
-    mandante: "Vencedor Segunda Fase 11",
+    mandante: "México",
     visitante: "Vencedor Segunda Fase 12"
   },
   {
