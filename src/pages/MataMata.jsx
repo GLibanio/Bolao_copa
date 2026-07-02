@@ -311,11 +311,11 @@ function MataMata() {
                                                             color: "#0057b8",
                                                         }}
                                                     >
+                                                        {classMandante && " (C) "}
                                                         {resultado.golsMandante}
-                                                        {classMandante && " (C)"}
                                                         {" x "}
                                                         {resultado.golsVisitante}
-                                                        {classVisitante && " (C)"}
+                                                        {classVisitante && " (C) "}
                                                     </div>
 
                                                     <div
@@ -475,13 +475,13 @@ function MataMata() {
 
                                             {aposta.golsMandante === aposta.golsVisitante &&
                                                 aposta.classificado === jogo.mandante &&
-                                                " (C)"}
+                                                " (C) "}
                                             {aposta.golsMandante}
                                             {" x "}
                                             {aposta.golsVisitante}
                                             {aposta.golsMandante === aposta.golsVisitante &&
                                                 aposta.classificado === jogo.visitante &&
-                                                " (C)"}
+                                                " (C) "}
                                             
                                         </strong>
                                     </div>
