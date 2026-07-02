@@ -877,8 +877,8 @@ const oitavas = [
     local: "Seattle Field",
     data: "2026-07-06",
     horario: "21:00",
-    mandante: "Vencedor Segunda Fase 7",
-    visitante: "Vencedor Segunda Fase 8"
+    mandante: "Estados Unidos",
+    visitante: "Bélgica"
   },
   {
     id: 93,
@@ -900,7 +900,7 @@ const oitavas = [
     data: "2026-07-05",
     horario: "21:00",
     mandante: "México",
-    visitante: "Vencedor Segunda Fase 12"
+    visitante: "Inglaterra"
   },
   {
     id: 95,
