@@ -910,8 +910,8 @@ const oitavas = [
     local: "Atlanta",
     data: "2026-07-07",
     horario: "13:00",
-    mandante: "Vencedor Segunda Fase 13",
-    visitante: "Vencedor Segunda Fase 14"
+    mandante: "Argentina",
+    visitante: "Egito"
   },
   {
     id: 96,
@@ -922,7 +922,7 @@ const oitavas = [
     data: "2026-07-07",
     horario: "17:00",
     mandante: "Suíça",
-    visitante: "Vencedor Segunda Fase 16"
+    visitante: "Colômbia"
   }
 ];
 
