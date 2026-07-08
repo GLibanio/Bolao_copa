@@ -946,8 +946,8 @@ const quartas = [
     local: "Los Angeles",
     data: "2026-07-10",
     horario: "16:00",
-    mandante: "Vencedor Oitavas 3",
-    visitante: "Vencedor Oitavas 4"
+    mandante: "Espanha",
+    visitante: "Bélgica"
   },
   {
     id: 99,
@@ -968,8 +968,8 @@ const quartas = [
     local: "Kansas City",
     data: "2026-07-11",
     horario: "22:00",
-    mandante: "Vencedor Oitavas 7",
-    visitante: "Vencedor Oitavas 8"
+    mandante: "Argentina",
+    visitante: "Suíça"
   }
 ];
 
