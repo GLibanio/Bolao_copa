@@ -982,8 +982,8 @@ const semis = [
     local: "Dallas",
     data: "2026-07-14",
     horario: "16:00",
-    mandante: "Vencedor Quartas 1",
-    visitante: "Vencedor Quartas 2"
+    mandante: "França",
+    visitante: "Espanha"
   },
   {
     id: 102,
@@ -993,8 +993,8 @@ const semis = [
     local: "Atlanta",
     data: "2026-07-15",
     horario: "16:00",
-    mandante: "Vencedor Quartas 3",
-    visitante: "Vencedor Quartas 4"
+    mandante: "Inglaterra",
+    visitante: "Argentina"
   }
 ];
 
