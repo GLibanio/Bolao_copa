@@ -1007,8 +1007,8 @@ const terceiro = [
     local: "Miami",
     data: "2026-07-18",
     horario: "18:00",
-    mandante: "Perdedor Semifinal 1",
-    visitante: "Perdedor Semifinal 2"
+    mandante: "França",
+    visitante: "Inglaterra"
   }
 ];
 
@@ -1021,8 +1021,8 @@ const final = [
     local: "Nova Jersey",
     data: "2026-07-19",
     horario: "16:00",
-    mandante: "Vencedor Semifinal 1",
-    visitante: "Vencedor Semifinal 2"
+    mandante: "Espanha",
+    visitante: "Argentina"
   }
 ];
 
